@@ -10,6 +10,35 @@ if(!empty($_POST)){
            die("ce n'est pas un email");
             }
             //verifier sil existe dans la base de donnee. pour cela, il faut se connecter
+            require_once "/inde.php";
+
+            $sql="SELECT *  FROM `users` WHERE `email`=':email' ";
+
+            $requete=$db->prepare($sql);
+
+            $requete->bindParam(':email', $_POST['email'], PDO::PARAM_STR_CHAR);
+            $requete->execute();
+
+            $user=$query->fetch();
+          
+
+            if(!$user){
+                //l'utilisateur n'existe pas
+                die("User not found");
+                header("Location: /inscription.php");
+            }
+
+            //ici, notre utilisateur existe on peut maintenant verify le mot de passe
+             if(!password_verify($_POST['pass'], $user['password'])){
+              die("Mot de passe incorrect");
+              header("Location: /inscription.php");
+             }
+
+
+             //ici, l'utilisateur et le mot de passe existe
+               
+
+             //on de vra maintenant ouvrir la session
         }
 }
 
