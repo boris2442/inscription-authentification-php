@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 if(!empty($_POST)){
     if(
         isset($_POST["pseudo"], $_POST["email"], $_POST["password"])
@@ -32,10 +32,24 @@ if(!empty($_POST)){
           $requete->bindParam(".pseudo", $pseudo, PDO::PARAM_STR );
           $requete->bindParam(":email", $_POST["email"]);
           $requete->execute();
-        //   $user=$requete->fetchAll()
+        //on recupere l'id du nouvel utilisateur
+        $id=$db->lastInsertId();
         
        //on connectera l;'utilisateur a la base
          //je prefere que mes utilisateus se connecte a l'aide de l'email
+
+         session_start();
+         $_SESSION['user']=
+                     [
+          'id'=>$id,
+           'pseudo'=>$pseudo,
+        'email'=>$_POST['email'],
+         'roles'=>["ROLE_USER"]
+          ];
+         header("location:profil.php");
+
+
+
   
         }else{
             die("le formulaire est in incomplet");

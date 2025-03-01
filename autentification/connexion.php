@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 if(!empty($_POST)){
     if(
         isset($_POST['email'], $_POST['password']) &&
@@ -10,7 +10,7 @@ if(!empty($_POST)){
            die("ce n'est pas un email");
             }
             //verifier sil existe dans la base de donnee. pour cela, il faut se connecter
-            require_once "/inde.php";
+            require_once "/index   .php";
 
             $sql="SELECT *  FROM `users` WHERE `email`=':email' ";
 
@@ -38,7 +38,25 @@ if(!empty($_POST)){
              //ici, l'utilisateur et le mot de passe existe
                
 
-             //on de vra maintenant ouvrir la session
+             //on de vra maintenant ouvrir la session 
+
+             session_start();
+             //on stocke dans $session  les infots de l'utilisateurs 
+
+             $_SESSION['user']=
+             [
+                'id'=>$user['id'],       //tout a noter que ce user est le nom de la table  et [...] sont les attributs de la table users
+                'pseudo'=>$user['pseudo'],  //tout a noter que ce user est le nom de la table  et [...] sont les attributs de la table users
+                'email'=>$user['email'],  //tout a noter que ce user est le nom de la table  et [...] sont les attributs de la table users
+                'roles'=>$user['roles']  //tout a noter que ce user est le nom de la table  et [...] sont les attributs de la table users
+
+
+
+             ];
+
+             //on peut rediriger vers la page de prfil
+
+             header("location:profil.php");
         }
 }
 

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include_once "/index.php";
 
 $username="SIMO'; --";//ne considere pas ce qui est apres ce code. Il s'agit d'une injection sql
